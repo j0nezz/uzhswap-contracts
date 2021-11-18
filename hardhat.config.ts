@@ -10,6 +10,10 @@ dotenv.config();
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
+// chain urls
+const GANACHE_URL = "http://127.0.0.1:7545";
+const UZH_URL = "http://130.60.244.246:8545";
+
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.7.6",
@@ -23,14 +27,14 @@ const config: HardhatUserConfig = {
   defaultNetwork: "ganache",
   networks: {
     ganache: {
-      url: process.env.GANACHE_URL,
+      url: GANACHE_URL,
       accounts:
         process.env.GANACHE_PRIVATE_KEY !== undefined
           ? [process.env.GANACHE_PRIVATE_KEY]
           : [],
     },
     uzh: {
-      url: process.env.UZH_URL,
+      url: UZH_URL,
       accounts:
         process.env.UZH_PRIVATE_KEY !== undefined
           ? [process.env.UZH_PRIVATE_KEY]
