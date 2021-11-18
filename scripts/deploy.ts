@@ -4,65 +4,113 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers } from "hardhat";
-import {ContractFactory} from "ethers";
+import { ContractFactory } from "ethers";
 
-import WETH9 from '../utils/weth9.json'
-import FACTORY from '@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json'
-import ROUTER from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
-import NFT_DESCRIPTOR from '@uniswap/v3-periphery/artifacts/contracts/libraries/NFTDescriptor.sol/NFTDescriptor.json'
-import POSITION_MANAGER from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
-import MULTICALL from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
-import QUOTER from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
-
+import WETH9 from "../utils/weth9.json";
+import FACTORY from "@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json";
+import ROUTER from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
+import NFT_DESCRIPTOR from "@uniswap/v3-periphery/artifacts/contracts/libraries/NFTDescriptor.sol/NFTDescriptor.json";
+import POSITION_MANAGER from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json";
+import MULTICALL from "@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json";
+import QUOTER from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
+import fs from "fs";
 
 async function main() {
+  const addresses: any = {};
+
   const [actor] = await ethers.getSigners();
 
   const Weth9 = new ContractFactory(WETH9.abi, WETH9.bytecode, actor);
   const weth9 = await Weth9.deploy();
-  console.log("WETH9: ", weth9.address)
+  addresses.weth9 = { address: weth9.address };
+  console.log("WETH9: ", weth9.address);
 
   const Factory = new ContractFactory(FACTORY.abi, FACTORY.bytecode, actor);
   const factory = await Factory.deploy();
-
-  console.log("Factory: ", factory.address)
+  addresses.factory = { address: factory.address };
+  console.log("Factory: ", factory.address);
 
   const Router = new ContractFactory(ROUTER.abi, ROUTER.bytecode, actor);
   const router = await Router.deploy(factory.address, weth9.address);
+  addresses.router = { address: router.address };
+  console.log("Router: ", router.address);
 
-  console.log("Router: ", router.address)
-
-  const NftDescriptorLibrary = new ContractFactory(NFT_DESCRIPTOR.abi, NFT_DESCRIPTOR.bytecode, actor);
+  const NftDescriptorLibrary = new ContractFactory(
+    NFT_DESCRIPTOR.abi,
+    NFT_DESCRIPTOR.bytecode,
+    actor
+  );
   const nftDescriptorLibrary = await NftDescriptorLibrary.deploy();
+  addresses.nftDescriptorLibrary = { address: nftDescriptorLibrary.address };
 
-  const positionDescriptorFactory = await ethers.getContractFactory('NonfungibleTokenPositionDescriptor', {
-    libraries: {
-      NFTDescriptor: nftDescriptorLibrary.address,
-    },
-  })
+  const positionDescriptorFactory = await ethers.getContractFactory(
+    "NonfungibleTokenPositionDescriptor",
+    {
+      libraries: {
+        NFTDescriptor: nftDescriptorLibrary.address,
+      },
+    }
+  );
   const nftDescriptor = await positionDescriptorFactory.deploy(
-      weth9.address,
-      // 'ETH' as a bytes32 string
-      ethers.utils.formatBytes32String("UZHETH")
-  )
+    weth9.address,
+    // 'ETH' as a bytes32 string
+    ethers.utils.formatBytes32String("UZHETH")
+  );
+  addresses.nftDescriptor = { address: nftDescriptor.address };
 
-  const PositionManager = new ContractFactory(POSITION_MANAGER.abi, POSITION_MANAGER.bytecode, actor);
-  const positionManager = await PositionManager.deploy( factory.address,
-      weth9.address,
-      nftDescriptor.address);
+  const PositionManager = new ContractFactory(
+    POSITION_MANAGER.abi,
+    POSITION_MANAGER.bytecode,
+    actor
+  );
+  const positionManager = await PositionManager.deploy(
+    factory.address,
+    weth9.address,
+    nftDescriptor.address
+  );
+  addresses.positionManager = { address: positionManager.address };
+  console.log("Position Manager: ", positionManager.address);
 
-  console.log("Position Manager: ", positionManager.address)
-
-  const Multicall = new ContractFactory(MULTICALL.abi, MULTICALL.bytecode, actor);
+  const Multicall = new ContractFactory(
+    MULTICALL.abi,
+    MULTICALL.bytecode,
+    actor
+  );
   const multicall = await Multicall.deploy();
-
-  console.log("Multicall: ", multicall.address)
+  addresses.multicall = { address: multicall.address };
+  console.log("Multicall: ", multicall.address);
 
   const Quoter = new ContractFactory(QUOTER.abi, QUOTER.bytecode, actor);
   const quoter = await Quoter.deploy(factory.address, weth9.address);
+  addresses.quoter = { address: quoter.address };
+  console.log("Quoter: ", quoter.address);
 
-  console.log("Quoter: ", quoter.address)
-
+  // write file to json
+  const input = { date: new Date(), contracts: addresses };
+  const file: string = "./logs/contractAddresses.json";
+  fs.stat(file, (exist) => {
+    if (exist) {
+      try {
+        fs.appendFileSync(
+          "./logs/contractAddresses.json",
+          JSON.stringify(input)
+        );
+        console.log("appended - addresses successfully written in file!");
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        fs.writeFileSync(
+          "./logs/contractAddresses.json",
+          JSON.stringify(input)
+        );
+        console.log("created - addresses successfully written in file!");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere
