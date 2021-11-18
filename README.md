@@ -9,9 +9,7 @@ In the root folder create a `.env` file with the following values:
 
     UZH_PRIVATE_KEY="<private key of a valid UZHETH account to deploy contracts>"  
     GANACHE_PRIVATE_KEY="<private key of a valid GANACHE account to deploy contracts>"  
-    GANACHE_URL="http://127.0.0.1:7545"
-    UZH_URL="http://130.60.244.246:8545"  
-
+  
 ## Deployment  Uniswap Contracts
 
 ```  
