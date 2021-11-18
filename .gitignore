@@ -4,6 +4,8 @@ node_modules
 coverage
 coverage.json
 typechain
+
+# log file
 tokenAddresses.txt
 
 #Hardhat files
