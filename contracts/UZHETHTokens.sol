@@ -10,6 +10,8 @@ contract UzhUniToken is ERC20 {
 
     constructor() ERC20("UzhUniToken", "UZHUNI") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -18,6 +20,8 @@ contract Intellicoin is ERC20 {
 
     constructor() ERC20("Intellicoin", "ITC") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -26,6 +30,8 @@ contract Privatepedia is ERC20 {
 
     constructor() ERC20("Privatepedia", "PVT") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -34,6 +40,8 @@ contract Incoingnito is ERC20 {
 
     constructor() ERC20("Incoingnito", "ICG") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -42,6 +50,8 @@ contract Coinicious is ERC20 {
 
     constructor() ERC20("Coinicious", "CNS") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -50,6 +60,8 @@ contract Cryptofficialcoin is ERC20 {
 
     constructor() ERC20("CryptofficialCoin", "COC") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -58,6 +70,8 @@ contract UZHSushi is ERC20 {
 
     constructor() ERC20("UZHSushi", "UZHSUS") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
 
@@ -66,5 +80,7 @@ contract UZHCro is ERC20 {
 
     constructor() ERC20("UZHCro", "UZHCro") {
         _mint(msg.sender, INITIAL_SUPPLY);
+        // approve deployer to spend tokens
+        ERC20.approve(msg.sender, INITIAL_SUPPLY);
     }
 }
