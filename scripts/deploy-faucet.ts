@@ -11,12 +11,12 @@ async function main() {
   // console.log("signer", signer, ""); // console.log("actor", actor, "");
 
   // faucet deploy arguments
-  const spenderAddress = network.config.accounts.toString().substring(2);
+  const tokenOwnerAddress = network.config.accounts.toString();
   const amountToClaim = 100;
 
   // deploy faucet contract
   const FaucetFactory = await ethers.getContractFactory("Faucet");
-  const faucet = await FaucetFactory.deploy(spenderAddress, amountToClaim);
+  const faucet = await FaucetFactory.deploy(tokenOwnerAddress, amountToClaim);
   await faucet.deployed();
   const faucetAddress = faucet.address;
   console.log("Deployed Faucet to: ", faucetAddress);
