@@ -29,7 +29,7 @@ contract Faucet
         //send tokens to the one who called this contract
         _contractAddress.transferFrom(_tokenOwner, msg.sender, _tokensPerClaim);
         // Next request from the address can be made only after 5 minutes
-        nextRequestAt[msg.sender] = block.timestamp + (5 minutes);
+        nextRequestAt[msg.sender] = block.timestamp + (1 minutes);
         // emit event
         emit Claim(msg.sender, _tokensPerClaim);
     }
