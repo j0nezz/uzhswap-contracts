@@ -7,8 +7,6 @@ contract Faucet
 {
     // For rate limiting
     mapping(address => uint256) nextRequestAt;
-    //the ERC20 to be spent
-    IERC20 private _contractAddress;
     //the owner of the generous token provider for this faucet
     address private _tokenOwner;
     //how much tokens we want to spend per claim
