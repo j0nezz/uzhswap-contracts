@@ -23,11 +23,10 @@ contract Faucet
 
 
     function claim(IERC20 tokenAddress) external {
-        _contractAddress = IERC20(tokenAddress);
         // rate limiting
-        require(nextRequestAt[msg.sender] < block.timestamp, "FaucetError: Try again later");
+        require(nextRequestAt[msg.sender] < block.timestamp, "Faucet Timeout Limit: Try again later");
         //send tokens to the one who called this contract
-        _contractAddress.transferFrom(_tokenOwner, msg.sender, _tokensPerClaim);
+        IERC20(tokenAddress).transferFrom(_tokenOwner, msg.sender, _tokensPerClaim);
         // Next request from the address can be made only after 5 minutes
         nextRequestAt[msg.sender] = block.timestamp + (1 minutes);
         // emit event
