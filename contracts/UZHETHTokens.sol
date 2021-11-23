@@ -10,6 +10,7 @@ contract UzhUniToken is ERC20 {
 
     constructor() ERC20("UzhUniToken", "UZHUNI") {
         _mint(msg.sender, INITIAL_SUPPLY);
+
     }
 }
 

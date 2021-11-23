@@ -13,12 +13,14 @@ import NFT_DESCRIPTOR from "@uniswap/v3-periphery/artifacts/contracts/libraries/
 import POSITION_MANAGER from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json";
 import MULTICALL from "@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json";
 import QUOTER from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
-import fs from "fs";
+import writeLogFile from "../helpers/write-files";
+import getNetworkInfo from "../helpers/get-network-info";
 
 async function main() {
   const addresses: any = {};
 
   const [actor] = await ethers.getSigners();
+  const networkID = await getNetworkInfo(actor);
 
   const Weth9 = new ContractFactory(WETH9.abi, WETH9.bytecode, actor);
   const weth9 = await Weth9.deploy();
@@ -87,30 +89,8 @@ async function main() {
 
   // write file to json
   const input = { date: new Date(), contracts: addresses };
-  const file: string = "./logs/contractAddresses.json";
-  fs.stat(file, (exist) => {
-    if (exist) {
-      try {
-        fs.appendFileSync(
-          "./logs/contractAddresses.json",
-          JSON.stringify(input)
-        );
-        console.log("appended - addresses successfully written in file!");
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      try {
-        fs.writeFileSync(
-          "./logs/contractAddresses.json",
-          JSON.stringify(input)
-        );
-        console.log("created - addresses successfully written in file!");
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  });
+  const file: string = "contractAddresses.json";
+  writeLogFile(file, input, networkID);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
