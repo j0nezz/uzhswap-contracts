@@ -8,6 +8,8 @@ contract Faucet
     // For rate limiting
     mapping(address => uint256) nextRequestAt;
     //the owner of the generous token provider for this faucet
+    address private _contractOwner;
+    //the owner of the generous token provider for this faucet
     address private _tokenOwner;
     //how much tokens we want to spend per claim
     uint256 private _tokensPerClaim;
@@ -15,8 +17,26 @@ contract Faucet
     event Claim(address claimer, uint256 amount);
 
     constructor(address tokenOwner, uint256 tokensPerClaim) {
+        // sender is contract owner
+        _contractOwner = msg.sender;
         _tokenOwner = tokenOwner;
         _tokensPerClaim = tokensPerClaim;
+    }
+
+    modifier onlyOwner(){
+        require(msg.sender == _contractOwner, "Only the owner of the contract can update the amount to be claimed");
+        _;
+    }
+
+    // getter for _tokensPerClaim
+    function getAmount() public view returns (uint256) {
+        return _tokensPerClaim;
+    }
+
+    // setter for _tokensPerClaim
+    function setAmount(uint256 newAmount) public virtual onlyOwner {
+        require(newAmount != 0, "cannot be set to 0!");
+        _tokensPerClaim = newAmount;
     }
 
 
