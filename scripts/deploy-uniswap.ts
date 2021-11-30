@@ -19,7 +19,8 @@ import getNetworkInfo from "../helpers/get-network-info";
 async function main() {
   const addresses: any = {};
 
-  const [actor] = await ethers.getSigners();
+  const actors = await ethers.getSigners();
+  const actor = actors[0];
   const networkID = await getNetworkInfo(actor);
 
   const Weth9 = new ContractFactory(WETH9.abi, WETH9.bytecode, actor);

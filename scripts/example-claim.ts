@@ -11,12 +11,21 @@ async function main() {
   INFO: adapt PK in you .env file if you want to example claim with a different account than the deployer of the contracts
   --> then run: hardhat run scripts/example-claim.ts
    */
-  const [sender] = await ethers.getSigners();
-  // has to be a deployed faucet contract address
-  const faucetAddress = "0x403894021396a417ed748d63feB7C77099c45b8B";
+  const senders = await ethers.getSigners();
+  // choose other address than deployer
+  const sender = senders[1];
+  // has to be a deployed faucet contract address on the CORRECT NETWORK
+  // Ganache Faucet Address
+  const faucetAddress = "0x572D80a44F2b0633354ecE16CeA4B1aDB5a7e768";
+  // UZH Faucet Address
+  // const faucetAddress = "";
+
   const faucetABI = faucetJSON.abi;
-  // has to be a deployed token address
-  const deployedTokenAddress = "0x2fd7632915bE8659f2A0ECAad8fD7889006Ec30E";
+  // has to be a deployed token address on the CORRECT NETWORK
+  // --> Ganache Token Address
+  const deployedTokenAddress = "0x9Ae8238eC7AbF4f1D96567781Ec7E4C4f86386Fc";
+
+  // const deployedTokenAddress = "0x2fd7632915bE8659f2A0ECAad8fD7889006Ec30E";
 
   // get faucet Contract Instance
   const faucetContractInstance = new ethers.Contract(

@@ -14,6 +14,7 @@ dotenv.config();
 const GANACHE_URL = "http://127.0.0.1:7545";
 const UZH_URL = "http://130.60.244.246:8545";
 
+// @ts-ignore
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.7.6",
@@ -28,16 +29,18 @@ const config: HardhatUserConfig = {
   networks: {
     ganache: {
       url: GANACHE_URL,
+      // @ts-ignore
       accounts:
         process.env.GANACHE_PRIVATE_KEY !== undefined
-          ? [process.env.GANACHE_PRIVATE_KEY]
+          ? [process.env.GANACHE_PRIVATE_KEY, process.env.GANACHE_PRIVATE_KEY_2]
           : [],
     },
     uzh: {
       url: UZH_URL,
+      // @ts-ignore
       accounts:
         process.env.UZH_PRIVATE_KEY !== undefined
-          ? [process.env.UZH_PRIVATE_KEY]
+          ? [process.env.UZH_PRIVATE_KEY, process.env.UZH_PRIVATE_KEY_2]
           : [],
     },
   },
