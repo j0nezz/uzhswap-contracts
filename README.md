@@ -7,13 +7,18 @@ the [UZH Ethereum network](http://uzheth.business.uzh.ch)
 
 In the root folder create a `.env` file with the following values:
 
-``
+```
 UZH_PRIVATE_KEY="<private key of a valid UZHETH account to deploy contracts>"
-``
+UZH_PRIVATE_KEY_2 ="<second and different private key of another valid UZHETH account to deploy contracts>"
+```
 
-``
+```
 GANACHE_PRIVATE_KEY="<private key of a valid GANACHE account to deploy contracts>"
-``
+GANACHE_PRIVATE_KEY_2="<second and different private key of another valid GANACHE account to deploy contracts>"
+```
+
+The first PK for the network is used in the scripts to deploy the tokens and faucet contract, whereas the secondary PK
+or account is used to test and try the functionality of the deployed contracts.
 
 ## Deployment  Uniswap Contracts
 
@@ -71,3 +76,24 @@ The addresses of the various deployed contracts will be logged and save into `.j
 directory. To differentiate to which network the contracts were deployed, the file names are prefixed with the network
 chain ID. For instance, addresses for the UZHETH network (chainID = 702) can be found locally after script execution
 in `./logs/702_tokenAddresses.json`.
+
+# V2 - Deployment Faucet && ERC20 Tokens
+
+### V2 Faucet Address
+
+| Contract        | Address     |    
+| ------------- |:-------------:|   
+| Faucet:   | 0x6305d44b42Ce1BD7173740F602cf1C0FDf67ab6f |
+
+### V2 Token Addresses
+
+| Contract        | Address     |    
+| ------------- |:-------------:|   
+| UzhUniToken (UZHUNI):  | 0x5c12cebf2722b71a3C85419fA5EE5939D5b06da7 |  
+| UZHSushi (UZHSUS) | 0xb0a1c60eB1dCa3E99Ba232c331a4Ec6EEd31410A |  
+| UZHCro (UZHCro) | 0x01209c5ec19DDd983D9e5Aa9bff2c741acB58A0D |  
+| Incoingnito (ICG)| 0xD2Bf70a16f58A0cF712cF9a3A8C3A93a6cdf966e |  
+| Intellicoin (ITC)| 0x1eb3ab261A2bf7dBA1B5dd14bD6FCF163786DaA2 |  
+| Privatepedia (PVT) | 0xEA2A3cc2e42b4CcE1b879F58DEC102738F102065 |   
+| Coinicious (CNS) |  0x68f3E281C9742448fdc6e2ea6e2fc817bEA47253 |  
+| Cryptofficialcoin (COC) | 0x927116E9C17Ab018b4fEaEbc2CE8197eB61ea50A |
