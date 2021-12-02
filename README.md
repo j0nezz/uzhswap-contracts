@@ -78,7 +78,7 @@ the tokens.
 
 ## Logging
 
-The addresses of the various deployed contracts will be logged and save into `.json` files inside the `./logs`  
+The addresses of the various deployed contracts will be logged and saved into `.json` files inside the `./logs`  
 directory. To differentiate to which network the contracts were deployed, the file names are prefixed with the network  
 chain ID. For instance, addresses for the UZHETH network (chainID = 702) can be found locally after script execution  
 in `./logs/702_tokenAddresses.json`.  
