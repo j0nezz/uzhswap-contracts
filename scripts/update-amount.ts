@@ -14,14 +14,15 @@ async function main() {
   const sender = senders[1];
 
   // define the new amount that the faucet will spend when tokens are claimed
-  const newAmount: number = 100000000000000000;
+  const newAmount: number = 100000000000000;
   const bigNumberNewAmount: BigNumber = BigNumber.from(newAmount.toString());
 
   // has to be a deployed faucet contract address on the CORRECT NETWORK
-  // Ganache Faucet Address:
-  const faucetAddress = "0x572D80a44F2b0633354ecE16CeA4B1aDB5a7e768";
-  // UZH Faucet Address:
-  // const faucetAddress = "";
+  // TODO comment out or in the right address of the corresponding network
+  // --> Ganache Faucet Address:
+  // const faucetAddress = "0x572D80a44F2b0633354ecE16CeA4B1aDB5a7e768";
+  // --> UZH Faucet Address:
+  const faucetAddress = "0x6305d44b42Ce1BD7173740F602cf1C0FDf67ab6f";
   const faucetABI = faucetJSON.abi;
 
   // get faucet Contract Instance with contract owner
@@ -46,17 +47,19 @@ async function main() {
       18
     )} tokens`
   );
+  await currentAmount;
 
   // update claimable amount
   const updateAmount = await ownerFaucetContractAddress.setAmount(
     bigNumberNewAmount
   );
+  await updateAmount;
   console.log("Updating amount", updateAmount);
 
   // get updated claimable amount
   const updatedAmount = await senderFaucetContractInstance.getAmount();
   console.log(
-    `current Amount that can be claimed ${ethers.utils.formatEther(
+    `new Amount that can be claimed ${ethers.utils.formatEther(
       updatedAmount
     )} tokens`
   );
