@@ -29,16 +29,18 @@ const config: HardhatUserConfig = {
     ganache: {
       url: GANACHE_URL,
       accounts:
-        process.env.GANACHE_PRIVATE_KEY !== undefined
-          ? [process.env.GANACHE_PRIVATE_KEY]
-          : [],
+          [
+              ...(process.env.GANACHE_PRIVATE_KEY?[process.env.GANACHE_PRIVATE_KEY]:[]), 
+              ...(process.env.GANACHE_PRIVATE_KEY_2?[process.env.GANACHE_PRIVATE_KEY_2]:[])
+          ],
     },
     uzh: {
       url: UZH_URL,
-      accounts:
-        process.env.UZH_PRIVATE_KEY !== undefined
-          ? [process.env.UZH_PRIVATE_KEY]
-          : [],
+      accounts: 
+          [
+              ...(process.env.UZH_PRIVATE_KEY?[process.env.UZH_PRIVATE_KEY]:[]),
+              ...(process.env.UZH_PRIVATE_KEY_2?[process.env.UZH_PRIVATE_KEY_2]:[])
+          ],
     },
   },
 };

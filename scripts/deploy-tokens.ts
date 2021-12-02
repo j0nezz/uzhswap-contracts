@@ -22,7 +22,8 @@ async function main() {
   const addresses: any = {};
 
   // create transaction signer
-  const [deployer] = await ethers.getSigners();
+  const deployers = await ethers.getSigners();
+  const deployer = deployers[0];
   const contractOwner = deployer.address;
   // get current network
   const networkID = await getNetworkInfo(deployer);
