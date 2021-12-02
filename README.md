@@ -20,9 +20,16 @@ GANACHE_PRIVATE_KEY_2="<second and different private key of another valid GANACH
 The first PK for the network is used in the scripts to deploy the tokens and faucet contract, whereas the secondary PK  
 or account is used to test and try the functionality of the deployed contracts.
 
+## Quickstart
+
+- Install dependencies: `npm install`
+- Deploy all contracts and example tokens: `npm run deploy:[uzh|ganache]`
+
+
 ## Deployment  Uniswap Contracts
 
-``` hardhat run scripts/deploy-uniswap.ts --network uzh      
+``` 
+hardhat run scripts/deploy-uniswap.ts --network uzh      
 ```   
 
 ### Contract Addresses
@@ -38,9 +45,10 @@ Following contracts have been deployed on the UZHETH and are ready to use.
 | Multicall   | 0x9F2a04D94C6EA38965A854c3859C88c1E2Eb0BA0 |       
 | Quoter   | 0xffF309A1CA21cdC63d6E1782D8D362aA26BDe480 |    
 
-## Deployment Faucet && ERC20 Tokens
+## Deployment Faucet and ERC20 Tokens
 
-``` hardhat run scripts/deploy-tokens.ts --network uzh      
+```
+hardhat run scripts/deploy-tokens.ts --network uzh      
 ```   
 
 This script will deploy the `Faucet.sol` smart contract that serves as a faucet that can distribute coins to other  
